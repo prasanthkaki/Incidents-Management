@@ -1,0 +1,380 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 95%;
+    margin: 30px auto;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+thead {
+    background-color: #2f3640;
+    color: #fff;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.severity-Low {
+    color: green;
+    font-weight: bold;
+}
+
+.severity-Medium {
+    color: orange;
+    font-weight: bold;
+}
+
+.severity-High {
+    color: red;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+
+#empty-state {
+    margin-top: 20px;
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+}
+
+#pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+
+#totalInfo {
+    font-size: 14px;
+    color: #555;
+}
+
+.pager {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#pagination button {
+    padding: 6px 14px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+#pagination button:hover:not(:disabled) {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+#pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+#pageInfo {
+    font-size: 14px;
+    color: #333;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+#refreshBtn {
+    padding: 6px 14px;
+    font-size: 14px;
+    border: 1px solid #007bff;
+    background-color: #fff;
+    color: #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#refreshBtn:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#refreshBtn:active {
+    transform: scale(0.97);
+}
+.severity {
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    min-width: 70px;
+}
+
+/* Severity colors */
+.severity.critical {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.severity.high {
+    background-color: #fd7e14;
+    color: #fff;
+}
+
+.severity.medium {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.severity.low {
+    background-color: #198754;
+    color: #fff;
+}
+.actions {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.actions i {
+    cursor: pointer;
+    margin: 0 8px;
+    font-size: 16px;
+}
+
+.actions .edit-icon {
+    color: #0d6efd;
+}
+
+.actions .delete-icon {
+    color: #dc3545;
+}
+
+.actions i:hover {
+    opacity: 0.7;
+}
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal {
+    background: #fff;
+    width: 380px;
+    padding: 24px;
+    border-radius: 10px;
+    text-align: center;
+    animation: popIn 0.2s ease-out;
+}
+
+.modal h2 {
+    margin-top: 0;
+    color: #dc3545;
+}
+
+.modal p {
+    color: #555;
+    margin: 15px 0 25px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn.cancel {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.btn.delete {
+    background: #dc3545;
+    color: #fff;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+.severity {
+    display: inline-block;
+    min-width: 110px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Colors */
+.severity-critical {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.severity-high {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+.severity-medium {
+    background: #fffde7;
+    color: #f9a825;
+}
+
+.severity-low {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    width: 400px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.incidentModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.header {
+    display: flex;
+    align-items: center; /* Vertical alignment */
+    gap: 10px;           /* Space between the heading and buttons */
+}
+
+h1 {
+    margin-right: auto;  /* This pushes the buttons to the far right */
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+    width: 100%;
+    margin-bottom: 15px; /* Increased spacing for better breathing room */
+    padding: 10px;       /* Uniform internal spacing */
+    border: 1px solid #ccc;
+    border-radius: 4px;  /* Matches your button corners */
+    box-sizing: border-box; /* CRITICAL: Includes padding in the 100% width */
+    font-family: inherit;
+    font-size: 14px;
+}
+
+/* Specific fix for the textarea height and resize behavior */
+.modal-content textarea {
+    height: 80px;
+    resize: vertical; /* Prevents users from breaking the layout horizontally */
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #dc3545; /* Matches your current red theme */
+    text-align: center;
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #888;
+}
+

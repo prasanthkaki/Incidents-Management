@@ -49,5 +49,6 @@ Incidents table maintains foreign keys to all master tables.
 #### URL -> http://127.0.0.1:8000/static/index.html
     - once all the requirement are installed as per the requirement.txt file then please run the following command.
     python -m uvicorn main:app --reload
+    - Download the sql file that I have placed in the repo and import that database, you can see the data when we open the UI.
 
 ### used S3 for the logs to store the details of the each incident

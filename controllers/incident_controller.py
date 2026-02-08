@@ -35,7 +35,7 @@ def create_incident(payload: IncidentCreate, db: Session = Depends(get_db)):
     
     incident = create_incident_db(db, incident_data)
     if incident:
-        return create_incident_payload(incident)
+        create_incident_payload(incident)
         return {
             "status": "created",
             "description":"Incident created successfully.",
@@ -61,9 +61,15 @@ def get_list(db:Session = Depends(get_db),
             "title": i.title,
             "description": i.description,
             "severity": SEVERITY_NAME.get(i.severity, "Unknown"),
+            "severity_id" : i.severity,
+            "status_id" : i.status,
             "client_id" : i.client_id,
             "status": INCIDENT_STATUS_NAME.get(i.status, "Unknown"),
             "environment": i.environment.env_name,
+            "env_id" : i.env_id,
+            "business_unit_id" : i.business_unit_id,
+            "erp_module_id" : i.erp_module_id,
+            "category_id" : i.category_id,
             "created_at":i.created_at,
             "business_unit": i.business_unit.business_unit_name,
             "erp_module": i.erp_module.erp_name,

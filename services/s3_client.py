@@ -4,12 +4,20 @@ import os
 from datetime import datetime,timezone
 from common.constants import *
 
-s3 = boto3.client(
-    "s3",
-    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
-    region_name=os.getenv("AWS_REGION"),
-)
+aws_key = os.getenv("AWS_ACCESS_KEY_ID")
+s3 = None
+if aws_key and aws_key.strip():
+    try:
+        s3 = boto3.client(
+            "s3",
+            aws_access_key_id=aws_key,
+            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+            region_name=os.getenv("AWS_REGION", "us-east-1") # Provides a default region
+        )
+        print("S3 client initialized successfully.")
+    except Exception as e:
+        print(f"Error initializing S3: {e}")
+        s3 = None
 
 BUCKET_NAME = os.getenv("AWS_S3_BUCKET")
 
@@ -25,16 +33,17 @@ def upload_incident_snapshot(incident: dict):
     )
 
 def create_incident_payload(incident):
-    if os.getenv("AWS_S3_BUCKET") and os.getenv("AWS_ACCESS_KEY_ID"):
-        upload_incident_snapshot({
-                "id": incident.id,
-                "title": incident.title,
-                "description": incident.description,
-                "severity": SEVERITY_NAME.get(incident.severity, "Unknown"),
-                "status": INCIDENT_STATUS_NAME.get(incident.status, "Unknown"),
-                "environment": incident.environment.env_name,
-                "business_unit": incident.business_unit.business_unit_name,
-                "erp_module": incident.erp_module.erp_name,
-                "category": incident.categories.category_name,
-                "created_at": incident.created_at
-            })
+    if s3 is None:
+        return
+    upload_incident_snapshot({
+            "id": incident.id,
+            "title": incident.title,
+            "description": incident.description,
+            "severity": SEVERITY_NAME.get(incident.severity, "Unknown"),
+            "status": INCIDENT_STATUS_NAME.get(incident.status, "Unknown"),
+            "environment": incident.environment.env_name,
+            "business_unit": incident.business_unit.business_unit_name,
+            "erp_module": incident.erp_module.erp_name,
+            "category": incident.categories.category_name,
+            "created_at": incident.created_at
+        })

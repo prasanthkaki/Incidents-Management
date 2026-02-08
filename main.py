@@ -7,8 +7,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from models import ERPModule, BusinessUnit, Environment, categories
 from controllers.incident_controller import router as incident_router
 from fastapi.staticfiles import StaticFiles
+from middleware.auth import AuthMiddleware
 
 app = FastAPI()
+
+app.add_middleware(AuthMiddleware)
 
 app.mount("/static", StaticFiles(directory="views"), name="static")
 app.add_middleware(

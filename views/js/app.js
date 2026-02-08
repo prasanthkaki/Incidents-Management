@@ -3,6 +3,8 @@ let limit = 10;
 let totalPages = 1;
 let incidentToDelete = null;
 let masterData = null;
+let isEditMode = false;
+let editingIncidentId = null;
 
 $(document).ready(function () {
     fetchIncidents();
@@ -96,6 +98,45 @@ function renderTable(incidents) {
         `;
         tbody.append(row);
     });
+}
+
+$(document).on("click", ".edit-icon", function () {
+    const incidentId = $(this).data("id");
+
+    isEditMode = true;
+    editingIncidentId = incidentId;
+
+    $("#incidentModal h2").text("Update Incident");
+    $(".submit-btn").text("Update");
+
+    openIncidentModal();
+
+    fetchIncidentById(incidentId);
+});
+
+function fetchIncidentById(id) {
+    $.ajax({
+        url: `http://127.0.0.1:8000/incidents/list`,
+        method: "GET",
+        data: {id:id, page:1, limit:10},
+        success: function (res) {
+            populateIncidentForm(res);
+        },
+        error: function () {
+            alert("Failed to load incident");
+        }
+    });
+}
+
+function populateIncidentForm(incident) {
+    incident = incident.data[0]
+    $("#title").val(incident.title);
+    $("#description").val(incident.description);
+    $("#erp_module_id").val(incident.erp_module_id);
+    $("#env_id").val(incident.env_id);
+    $("#business_unit_id").val(incident.business_unit_id);
+    $("#category_id").val(incident.category_id);
+    $("#status").val(incident.status_id);
 }
 
 function formatDate(dateStr) {
@@ -223,6 +264,9 @@ $("#incidentForm").on("submit", function (e) {
         category_id: $("#category_id").val(),
         status: $("#status").val()
     };
+    if (isEditMode) {
+        payload.id = editingIncidentId;
+    }
 
     $.ajax({
         url: "http://127.0.0.1:8000/incidents/create-incident",
